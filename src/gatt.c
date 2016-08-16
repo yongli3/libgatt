@@ -40,6 +40,7 @@
 #include "att.h"
 #include "gattrib.h"
 #include "gatt.h"
+#include "log.h"
 
 struct discover_primary {
 	int ref;
@@ -954,6 +955,8 @@ guint gatt_write_char(GAttrib *attrib, uint16_t handle, const uint8_t *value,
 	size_t buflen;
 	struct write_long_data *long_write;
 
+    info("%s value=0x%x", __func__, *value);
+
 	buf = g_attrib_get_buffer(attrib, &buflen);
 
 	/* Use Write Request if payload fits on a single transfer, including 3
@@ -1270,6 +1273,8 @@ GIOChannel *gatt_connect(const char *src, const char *dst,
 	uint8_t dest_type;
 	GError *tmp_err = NULL;
 	BtIOSecLevel sec;
+
+    info("+%s psm=%d", __func__, psm);
 
 	str2ba(dst, &dba);
 

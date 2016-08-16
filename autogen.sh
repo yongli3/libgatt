@@ -10,6 +10,7 @@ else
         aclocal -I .
         fi
 
+libtoolize
 autoconf
 autoheader
 automake -a

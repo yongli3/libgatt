@@ -1,19 +1,26 @@
+m4/
 .deps/
 .libs/
 *.o
 *.lo
 *.o
 *.a
+.dirstamp
 Makefile.in
 autom4te.cache/
 compile
 config.h.in
+config.log
 configure
 missing
 Makefile
 config.h
-config.log
 config.status
 libtool
 stamp-h1
+depcomp
+ltmain.sh
+aclocal.m4
+libgatt.la
+
 

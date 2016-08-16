@@ -215,11 +215,14 @@ static gboolean connect_cb(GIOChannel *io, GIOCondition cond,
 	int err, sk_err, sock;
 	socklen_t len = sizeof(sk_err);
 
+    info("+%s", __func__);
 	/* If the user aborted this connect attempt */
 	if ((cond & G_IO_NVAL) || check_nval(io))
 		return FALSE;
 
 	sock = g_io_channel_unix_get_fd(io);
+
+    printf("%s sock=%d\n", __func__, sock);
 
 	if (getsockopt(sock, SOL_SOCKET, SO_ERROR, &sk_err, &len) < 0)
 		err = -errno;
@@ -227,12 +230,13 @@ static gboolean connect_cb(GIOChannel *io, GIOCondition cond,
 		err = -sk_err;
 
 	if (err < 0)
-		ERROR_FAILED(&gerr, "connect error", -err);
+		ERROR_FAILED(&gerr, "connect_cb error", -err);
 
 	conn->connect(io, gerr, conn->user_data);
 
 	g_clear_error(&gerr);
 
+    info("-%s", __func__);
 	return FALSE;
 }
 
@@ -349,6 +353,8 @@ static int l2cap_connect(int sock, const bdaddr_t *dst, uint8_t dst_type,
 	int err;
 	struct sockaddr_l2 addr;
 
+    info("%s sock=%d cid=0x%x dst_type=%d", __func__, sock, cid, dst_type);
+
 	memset(&addr, 0, sizeof(addr));
 	addr.l2_family = AF_BLUETOOTH;
 	bacpy(&addr.l2_bdaddr, dst);
@@ -363,6 +369,7 @@ static int l2cap_connect(int sock, const bdaddr_t *dst, uint8_t dst_type,
 	if (err < 0 && !(errno == EAGAIN || errno == EINPROGRESS))
 		return -errno;
 
+    info("-%s", __func__);
 	return 0;
 }
 
