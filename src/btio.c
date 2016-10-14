@@ -215,7 +215,7 @@ static gboolean connect_cb(GIOChannel *io, GIOCondition cond,
 	int err, sk_err, sock;
 	socklen_t len = sizeof(sk_err);
 
-    info("+%s", __func__);
+    info("+%s-%s", __FILE__, __func__);
 	/* If the user aborted this connect attempt */
 	if ((cond & G_IO_NVAL) || check_nval(io))
 		return FALSE;
@@ -1616,6 +1616,8 @@ GIOChannel *bt_io_connect(BtIOConnect connect, gpointer user_data,
 
 	sock = g_io_channel_unix_get_fd(io);
 
+    info("+%s sock=%d type=%d", __func__, sock, opts.type);
+
 	switch (opts.type) {
 	case BT_IO_L2CAP:
 		err = l2cap_connect(sock, &opts.dst, opts.dst_type,
@@ -1635,7 +1637,7 @@ GIOChannel *bt_io_connect(BtIOConnect connect, gpointer user_data,
 	}
 
 	if (err < 0) {
-		ERROR_FAILED(gerr, "connect", -err);
+		ERROR_FAILED(gerr, "bt_io_connect", -err);
 		g_io_channel_unref(io);
 		return NULL;
 	}

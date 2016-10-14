@@ -43,6 +43,8 @@
 #include "src/shared/util.h"
 #include "log.h"
 
+#define PACKAGE_STRING "gatt 5.40"
+
 #define LOG_IDENT "bluetoothd"
 #define LOG_IDENT_LEN sizeof(LOG_IDENT)
 

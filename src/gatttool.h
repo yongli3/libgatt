@@ -21,6 +21,7 @@
  *
  */
 
+#if 0
 int interactive(const char *src, const char *dst, const char *dst_type,
 								int psm);
 GIOChannel *gatt_connect(const char *src, const char *dst,
@@ -28,3 +29,21 @@ GIOChannel *gatt_connect(const char *src, const char *dst,
 			int psm, int mtu, BtIOConnect connect_cb,
 			GError **gerr);
 static size_t gatt_attr_data_from_string(const char *str, uint8_t **data);
+#endif
+#ifndef __GATTTOOL_H
+#define __GATTTOOL_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+int main1(int argc, char *argv[]);
+void* BLE_send(void* value);
+void* BLE_init(void* value);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+
